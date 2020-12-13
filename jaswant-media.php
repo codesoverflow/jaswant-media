@@ -42,10 +42,10 @@ $jmCdnImgUrl = $isCdnContentEnabled ? WP_CONTENT_URL : '';
 
 
 $thumbnailsToGenerate = array(
-    'original'=> array(
-        'height' => 500,
-        'width' => 500
-    ),
+    // 'original'=> array(
+    //     'height' => 500,
+    //     'width' => 500
+    // ),
     'thumbnail' => array(
         'height' => 150,
         'width' => 150
