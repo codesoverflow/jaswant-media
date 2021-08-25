@@ -9,38 +9,10 @@
    License: GPL2
    */
 
-$isCdnContentEnabled = defined("WP_CONTENT_URL");
+$isCdnContentEnabled = defined("JM_WP_CONTENT_URL");
 
-$jmCdnImgUrl = $isCdnContentEnabled ? WP_CONTENT_URL : '';
+$jmCdnImgUrl = $isCdnContentEnabled ? JM_WP_CONTENT_URL : '';
    
-
-   
-   //wp_get_attachment_metadata
-   //wp_get_attachment_image_src
-
-   // wp_calculate_image_srcset_meta
-   // $image_meta = apply_filters( 'wp_calculate_image_srcset_meta', $image_meta, $size_array, $image_src, $attachment_id );
-
-
-   // apply_filters( 'wp_get_attachment_image_src', $image, $attachment_id, $size, $icon );
-
-//apply_filters( 'wp_calculate_image_sizes', $sizes, $size, $image_src, $image_meta, $attachment_id );
-
-//$sources = apply_filters( 'wp_calculate_image_srcset', $sources, $size_array, $image_src, $image_meta, $attachment_id );
-   
-
-//the_post_thumbnail( 'small-thumb' );    
-
-// if ( !extension_loaded('gd') || !function_exists('gd_info') ) {
-//     echo 'GD Library Not Installed';
-// } else {
-//     echo 'GD Library Available';
-// }
-
-// die;
-
-
-
 $thumbnailsToGenerate = array(
     // 'original'=> array(
     //     'height' => 500,
@@ -74,10 +46,14 @@ if($isCdnContentEnabled) {
 
     add_filter('wp_calculate_image_srcset', 
     'wp_calculate_image_srcset_jm', 10, 3);
+
+    // add_filter('stylesheet_directory_uri', 
+    // 'jm_replace_stylesheet_directory_uri_protocol_with_cdn', 10, 3);
+
+    
 }
 
     
-
 
 function wp_calculate_image_srcset_jm($sources) {
     foreach($sources as $sourceKey => $source) {
@@ -109,4 +85,9 @@ function jm_replace_image_url($url) {
     $imgSecondPart = $imgUrlArr[1];
 
     return $jmCdnImgUrl.'/'.$imgSecondPart;
+}
+
+function jm_replace_stylesheet_directory_uri_protocol_with_cdn($stylesheet_dir_uri, $stylesheet, $theme_root_uri) {
+    
+    return str_replace('http://', 'https://', $stylesheet_dir_uri);
 }
